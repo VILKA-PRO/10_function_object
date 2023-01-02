@@ -3,9 +3,8 @@ var initPerson = personGenerator.getPerson();
 var personObj = personGenerator.person;
 window.onload = generate();
 console.log("После загрузки страницы ", personObj);
-console.log(personGenerator.patronymic());
 
-// Запись даных в html`
+// Запись даных в html
 function generate()
 {
     document.getElementById('comma').innerText = ", дата рождения:";
