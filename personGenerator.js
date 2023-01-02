@@ -1,7 +1,5 @@
-
-
 const personGenerator = {
-    surnameJson: `{  
+  surnameJson: `{  
         "count": 16,
         "list": {
             "id_1": "Иванов",
@@ -22,22 +20,22 @@ const personGenerator = {
             "id_16": "Морозов"
         }
     }`,
-    firstNameMaleJson: `{
+  firstNameMaleJson: `{
         "count": 10,
         "list": {     
             "id_1": "Александр",
             "id_2": "Максим",
             "id_3": "Иван",
             "id_4": "Артем",
-            "id_5": "Дмитрий",
-            "id_6": "Никита",
+            "id_5": "Василий",
+            "id_6": "Петр",
             "id_7": "Михаил",
-            "id_8": "Даниил",
+            "id_8": "Дамир",
             "id_9": "Егор",
             "id_10": "Андрей"
         }
     }`,
-    firstNameFemaleJson: `{
+  firstNameFemaleJson: `{
         "count": 11,
         "list": {     
             "id_1": "Аврора",
@@ -54,38 +52,7 @@ const personGenerator = {
         }
     }`,
 
-    malePatronymicJson: `{  
-        "count": 10,
-        "list": {     
-            "id_1": "Александрович",
-            "id_2": "Максимович",
-            "id_3": "Иванович",
-            "id_4": "Артемович",
-            "id_5": "Дмитриевич",
-            "id_6": "Никитич",
-            "id_7": "Михаилович",
-            "id_8": "Даниилович",
-            "id_9": "Егорович",
-            "id_10": "Андреевич"
-        }
-    }`,
-    femalePatronymicJson: `{  
-        "count": 10,
-        "list": {     
-            "id_1": "Александровна",
-            "id_2": "Максимовна",
-            "id_3": "Ивановна",
-            "id_4": "Артемовна",
-            "id_5": "Дмитриевна",
-            "id_6": "Никитична",
-            "id_7": "Михаиловна",
-            "id_8": "Данииловна",
-            "id_9": "Егоровна",
-            "id_10": "Андреевна"
-        }
-    }`,
-
-    maleOccupationsJson: `{  
+  maleOccupationsJson: `{  
         "count": 10,
         "list": {     
             "id_1": "Дровосек",
@@ -101,7 +68,7 @@ const personGenerator = {
         }
     }`,
 
-    femaleOccupationsJson: `{  
+  femaleOccupationsJson: `{  
         "count": 10,
         "list": {     
             "id_1": "Укротитель кодеров",
@@ -117,7 +84,7 @@ const personGenerator = {
         }
     }`,
 
-    monthJson: `{  
+  monthJson: `{  
         "count": 12,
         "list": {     
             "id_1": "января",
@@ -135,111 +102,165 @@ const personGenerator = {
         }
     }`,
 
-    person: {
-        firstName: "",
-        surname: "",
-        patronymic: "",
-        gender: "",
-        date: "",
-        month: "",
-        year: "",
-        occupation: ""
-    },
+  person: {
+    firstName: "",
+    surname: "",
+    patronymic: "",
+    gender: "",
+    date: "",
+    month: "",
+    year: "",
+    occupation: "",
+  },
 
-    GENDER_MALE: "Мужчина",
-    GENDER_FEMALE: "Женщина",
+  GENDER_MALE: "Мужчина",
+  GENDER_FEMALE: "Женщина",
 
-    randomIntNumber: (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min),
+  randomIntNumber: (max = 1, min = 0) =>
+    Math.floor(Math.random() * (max - min + 1) + min),
 
-    randomValue: function (json) {
-        const obj = JSON.parse(json);
-        
-        const prop = `id_${this.randomIntNumber(obj.count, 1)}`; 
-        
-        return obj.list[prop];
-    },
+  randomValue: function (json) {
+    const obj = JSON.parse(json);
 
-    randomGender: function() {
-        let genderNum = this.randomIntNumber(2,1);
-        let gender = (genderNum == 1) ? this.GENDER_MALE : this.GENDER_FEMALE;
-        return gender
+    const prop = `id_${this.randomIntNumber(obj.count, 1)}`;
 
-    },
+    return obj.list[prop];
+  },
 
-    randomYear: function() {
-        return this.randomIntNumber(2021,1950);
-    },
+  randomGender: function () {
+    let genderNum = this.randomIntNumber(2, 1);
+    let gender = genderNum == 1 ? this.GENDER_MALE : this.GENDER_FEMALE;
+    return gender;
+  },
 
-    randomMonth: function() {
-        return this.randomValue(this.monthJson);
-    },
+  randomYear: function () {
+    return this.randomIntNumber(2021, 1950);
+  },
 
-    randomDate: function() {
-        var preMonth = this.person.month;
-        var daysInFeb; // Для високосного года
-        if (preMonth === "февраля"){
-                // Проверка на високосный год
-                if((this.person.year % 4 == 0)){ 
-                    console.log('Да, Високосный');
-                    daysInFeb = 29;
-                } else {
-                    console.log('Нет, не високосный');
-                    daysInFeb = 28;
-                }
-            return this.randomIntNumber(daysInFeb,1);
-        } else if  (preMonth == "января" || preMonth == "марта" || preMonth == "мая" || preMonth == "июля" || preMonth == "августа" || preMonth == "октября" || preMonth == "декабря"){
-            return this.randomIntNumber(31,1);
-        } else { 
-            return this.randomIntNumber(30,1);
-        }
-    },
+  randomMonth: function () {
+    return this.randomValue(this.monthJson);
+  },
 
-    randomFirstName: function() {
-        
-        if (this.person.gender == "Мужчина"){
-            return this.randomValue(this.firstNameMaleJson);
-        } else {
-            return this.randomValue(this.firstNameFemaleJson);
-        }
-    },
+  randomDate: function () {
+    var preMonth = this.person.month;
+    var daysInFeb; // Для високосного года
+    if (preMonth === "февраля") {
+      // Проверка на високосный год
+      if (this.person.year % 4 == 0) {
+        console.log("Да, Високосный");
+        daysInFeb = 29;
+      } else {
+        console.log("Нет, не високосный");
+        daysInFeb = 28;
+      }
+      return this.randomIntNumber(daysInFeb, 1);
+    } else if (
+      preMonth == "января" ||
+      preMonth == "марта" ||
+      preMonth == "мая" ||
+      preMonth == "июля" ||
+      preMonth == "августа" ||
+      preMonth == "октября" ||
+      preMonth == "декабря"
+    ) {
+      return this.randomIntNumber(31, 1);
+    } else {
+      return this.randomIntNumber(30, 1);
+    }
+  },
 
-     randomSurname: function() {
-        if (this.person.gender == "Мужчина"){
-            return this.randomValue(this.surnameJson);
-        } else {
-            return this.randomValue(this.surnameJson)+'а';
-        }
-    },
+  randomFirstName: function () {
+    if (this.person.gender == "Мужчина") {
+      return this.randomValue(this.firstNameMaleJson);
+    } else {
+      return this.randomValue(this.firstNameFemaleJson);
+    }
+  },
 
-    randomPatronymic: function() {
-        
-        if (this.person.gender == "Мужчина"){
-            return this.randomValue(this.malePatronymicJson);
-        } else {
-            return this.randomValue(this.femalePatronymicJson);
-        }
+  randomSurname: function () {
+    if (this.person.gender == "Мужчина") {
 
-    },
+      return this.randomValue(this.surnameJson);
+    } else {
+      return this.randomValue(this.surnameJson) + "а";
+    }
+  },
 
-    randomOccupation: function() {
-        
-        if (this.person.gender == "Мужчина"){
-            return this.randomValue(this.maleOccupationsJson);
-        } else {
-            return this.randomValue(this.femaleOccupationsJson);
-        }
-    },
+  patronymic: function () {
+    //выбираем случайные имена для отчеств
+	let randomNameForPatronymic = this.randomValue(this.firstNameMaleJson);
+    
+    //смотрим окончание имени отца
+	fatherEnd = randomNameForPatronymic.slice(randomNameForPatronymic.length-2, randomNameForPatronymic.length);
+	fatherRoot = randomNameForPatronymic.slice(0, randomNameForPatronymic.length-2);
 
-    getPerson: function () {
-        
-        this.person.gender = this.randomGender();
-        this.person.firstName = this.randomFirstName();
-        this.person.surname = this.randomSurname();
-        this.person.patronymic = this.randomPatronymic();
-        this.person.month = this.randomMonth();
-        this.person.year = this.randomYear();
-        this.person.date = this.randomDate();
-        this.person.occupation = this.randomOccupation();
-        return this.person;
-    },
+	//задаём стандартные значения окончаний для м/ж отчеств
+    var genderEnd = "на";
+    if (this.person.gender == "Мужчина") genderEnd = "ич";
+
+    //проверяем случаи имён, исправляем в зависимости отчества.
+    switch (fatherEnd) {
+      case "ий":
+        randomNameForPatronymic = fatherRoot + "ьев";
+        break;
+      case "ов":
+        randomNameForPatronymic = fatherRoot + "ов";
+        break;
+      case "ль":
+        randomNameForPatronymic = fatherRoot + "льев";
+        break;
+      case "ма":
+        randomNameForPatronymic = fatherRoot + "мов";
+        break;
+      case "ей":
+        randomNameForPatronymic = fatherRoot + "еев";
+        break;
+      case "ва":
+        randomNameForPatronymic = fatherRoot + "вов";
+        break;
+      case "ья":
+        randomNameForPatronymic = fatherRoot + "ь";
+        break;
+      case "ай":
+        randomNameForPatronymic = fatherRoot + "ев";
+        break;
+      case "ел":
+        randomNameForPatronymic = fatherRoot + "ельев";
+        break;
+      case "ил":
+        randomNameForPatronymic = fatherRoot + "йлов";
+        break;
+      case "та":
+        randomNameForPatronymic = fatherRoot + "т";
+        break;
+      default:
+        randomNameForPatronymic += "ов";
+        break;
+    }
+
+    //выводим получившиеся имя
+    return randomNameForPatronymic + genderEnd
+  },
+
+  randomOccupation: function () {
+    if (this.person.gender == "Мужчина") {
+      return this.randomValue(this.maleOccupationsJson);
+    } else {
+      return this.randomValue(this.femaleOccupationsJson);
+    }
+  },
+
+  getPerson: function () {
+    this.person.gender = this.randomGender();
+    this.person.firstName = this.randomFirstName();
+    this.person.surname = this.randomSurname();
+    this.person.patronymic = this.patronymic();
+    this.person.month = this.randomMonth();
+    this.person.year = this.randomYear();
+    this.person.date = this.randomDate();
+    this.person.occupation = this.randomOccupation();
+    return this.person;
+  },
+
+  
 };
