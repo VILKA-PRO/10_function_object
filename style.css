@@ -122,7 +122,7 @@ body {
   }
   
   
-  @-webkit-keyframes shiny-btn1 {
+  @keyframes shiny-btn1 {
       0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
       20% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.2; }
       81% { -webkit-transform: scale(4) rotate(45deg); opacity: 0.7; }
